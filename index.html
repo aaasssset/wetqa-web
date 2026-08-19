@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>WETQA網頁</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body, html { height: 100%; overflow-x: hidden; background: #000; font-family: 'Segoe UI', sans-serif; color: white; scroll-behavior: smooth; }
+        
+        /* 雪花背景層 */
+        #snowCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+
+        /* 單頁區塊設計 */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 統一的玻璃質感視窗 */
+        .card {
+            background: rgba(20, 20, 25, 0.65); 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            padding: 50px 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            text-align: left;
+        }
+
+        /* 專屬標題排版 (已放大字體) */
+        .section-header {
+            max-width: 800px;
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            letter-spacing: 5px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .section-header .sub-title {
+            font-size: 1.15rem;
+            color: #aaa;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .section-line {
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 第一頁特有置中視窗 */
+        .home-card {
+            text-align: center;
+            max-width: 650px;
+        }
+
+        h1 { 
+            font-size: 4rem; 
+            letter-spacing: 12px; 
+            margin-bottom: 20px; 
+            text-shadow: 0 0 25px #a29bfe; 
+            background: linear-gradient(45deg, #fff, #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .home-card p { color: #ccc; letter-spacing: 1.5px; line-height: 1.9; font-size: 1.2rem; }
+
+        .scroll-hint {
+            display: inline-block;
+            margin-top: 30px;
+            color: #a29bfe;
+            text-decoration: none;
+            font-size: 1.05rem;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+        .scroll-hint:hover { color: #fff; text-shadow: 0 0 12px #a29bfe; }
+
+        /* 內文段落樣式 (已放大字體) */
+        .card-text {
+            color: #ddd;
+            font-size: 1.25rem;
+            line-height: 2.2;
+            letter-spacing: 1.5px;
+        }
+
+        /* 成員清單容器 */
+        .custom-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .custom-item {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .custom-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #a29bfe;
+            box-shadow: 0 0 20px rgba(162, 155, 254, 0.5);
+            object-fit: cover;
+            background-color: #222;
+            flex-shrink: 0;
+        }
+
+        .custom-info { margin-left: 22px; display: flex; flex-direction: column; }
+        .custom-name { font-size: 1.4rem; color: #fff; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 4px; }
+        .custom-tag { font-size: 0.9rem; color: #a29bfe; background: rgba(162, 155, 254, 0.15); padding: 3px 10px; border-radius: 6px; display: inline-block; margin: 4px 0 8px 0; width: fit-content; }
+        .custom-desc { font-size: 1.05rem; color: #ccc; letter-spacing: 0.5px; line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+    <!-- 下雪畫布 -->
+    <canvas id="snowCanvas"></canvas>
+
+    <!-- 頁面 1：首頁標題視窗 -->
+    <section id="home">
+        <div class="card home-card">
+            <h1>WETQA網頁</h1>
+            <p>歡迎來到WETQA網頁。我們也會持續更新，希望可以給我們支持。<br>
+            加入我們，炸報那些屁孩吧！</p>
+            <a href="https://discord.gg/sQXyd7hjwE" target="_blank" style="color: #a29bfe; display: block; margin-top: 20px; font-size: 1.1rem; text-decoration: none;">🔗 點此加入 Discord 伺服器</a>
+            <a href="#origin" class="scroll-hint">↓ 向下探索 ↓</a>
+        </div>
+    </section>
+
+    <!-- 頁面 2：成立原因 / ORIGIN -->
+    <section id="origin">
+        <div class="section-header">
+            <h2>成立原因 / ORIGIN</h2>
+            <div class="sub-title">制裁 ・ 尬電 ・ 力量</div>
+            <div class="section-line"></div>
+        </div>
+        <div class="card">
+            <div class="card-text">
+               起初，這一切只是源於對程式與未知的純粹好奇；但在深入這個圈子後，卻發現 Discord 充斥著各種無法理喻的喧囂與屁孩。既然現有的環境無法給予淨化，我們便決定不再旁      觀——親手研發出屬於我們的全自動機器人，用絕對的方式來重塑這片混亂。
+            </div>
+        </div>
+        <a href="#target" class="scroll-hint" style="margin-top: 25px;">↓ 目標 ↓</a>
+    </section>
+
+    <!-- 頁面 3：終極目標 / ULTIMATE TARGET -->
+    <section id="target">
+        <div class="section-header">
+            <h2>終極目標 / ULTIMATE TARGET</h2>
+            <div class="sub-title">毀滅 ・ 制裁</div>
+            <div class="section-line"></div>
+        </div>
+        <div class="card">
+            <div class="card-text">
+                我們的終極目標，是讓所有沉溺於虛妄與傲慢的狂妄之徒，徹底付出應有的嚴懲與代價。在絕對的力量與不可撼動的法則面前，任何愚蠢的挑釁與試探都將顯得無比渺小；等待他們的，只有無情的審判與終極的制裁。
+            </div>
+        </div>
+        <a href="#team" class="scroll-hint" style="margin-top: 25px;">↓ 製造成員 ↓</a>
+    </section>
+
+    <!-- 頁面 4：製造成員清單 -->
+    <section id="team">
+        <div class="section-header">
+            <h2>製造成員 / MEMBERS</h2>
+            <div class="sub-title">核心開發與創辦</div>
+            <div class="section-line"></div>
+        </div>
+        <div class="card">
+            <div class="custom-container">
+                
+                <!-- 成員 1 -->
+                <div class="custom-item">
+                    <img class="custom-img" src="retouch_2024092618093326.jpg" alt="超雄FK">
+                    <div class="custom-info">
+                        <div class="custom-name">超雄FK</div>
+                        <div class="custom-tag">創辦人</div>
+                        <div class="custom-desc">專案核心發起人，負責整體的方向與規劃。</div>
+                    </div>
+                </div>
+
+                <!-- 成員 2 -->
+                <div class="custom-item">
+                    <img class="custom-img" src="pic2.jpg" alt="!Re7">
+                    <div class="custom-info">
+                        <div class="custom-name">!Re7</div>
+                        <div class="custom-tag">核心</div>
+                        <div class="custom-desc">提供技術，跟整體的方向與規劃。</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 背景音樂 -->
+    <audio id="bgm" loop>
+        <source src="Marshmello - Alone (Official Music Video)_320k.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // --- 音樂自動播放 ---
+        const bgm = document.getElementById('bgm');
+        const startMusic = () => {
+            bgm.play().catch(e => {});
+            window.removeEventListener('click', startMusic);
+            window.removeEventListener('scroll', startMusic);
+        };
+        window.addEventListener('click', startMusic);
+        window.addEventListener('scroll', startMusic);
+
+        // --- 下雪特效 ---
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const snows = Array.from({length: 250}, () => ({
+            x: Math.random() * canvas.width, 
+            y: Math.random() * canvas.height, 
+            r: Math.random() * 2.5 + 0.8, 
+            d: Math.random() * 1.5 + 0.8 
+        }));
+
+        function drawSnow() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+            
+            snows.forEach(s => { 
+                ctx.beginPath(); 
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); 
+                ctx.fill(); 
+                
+                s.y += s.d; 
+                if (s.y > canvas.height) {
+                    s.y = 0;
+                    s.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(drawSnow);
+        }
+        drawSnow();
+    </script>
+</body>
+</html>
