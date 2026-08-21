@@ -161,7 +161,7 @@
         </div>
         <div class="card">
             <div class="card-text">
-               起初，這一切只是源於對程式與未知的純粹好奇；但在深入這個圈子後，卻發現 Discord 充斥著各種無法理喻的喧囂與屁孩。既然現有的環境無法給予淨化，我們便決定不再旁      觀——親手研發出屬於我們的全自動機器人，用絕對的方式來重塑這片混亂。
+                起初，這一切只是源於對程式與未知的純粹好奇；但在深入這個圈子後，卻發現 Discord 充斥著各種無法理喻的喧囂與屁孩。既然現有的環境無法給予淨化，我們便決定不再旁觀——親手研發出屬於我們的全自動機器人，用絕對的方式來重塑這片混亂。
             </div>
         </div>
         <a href="#target" class="scroll-hint" style="margin-top: 25px;">↓ 目標 ↓</a>
@@ -204,7 +204,7 @@
 
                 <!-- 成員 2 -->
                 <div class="custom-item">
-                    <img class="custom-img" src="IEWJDAKIKIJKKJE90865.jpg" alt="!Re7">
+                    <img class="custom-img" src="pic2.jpg" alt="!Re7">
                     <div class="custom-info">
                         <div class="custom-name">!Re7</div>
                         <div class="custom-tag">核心</div>
@@ -222,6 +222,14 @@
     </audio>
 
     <script>
+        // --- 強制載入時回到首頁 ---
+        window.addEventListener('load', () => {
+            if (window.location.hash) {
+                history.replaceState(null, null, window.location.pathname);
+            }
+            window.scrollTo(0, 0);
+        });
+        
         // --- 音樂自動播放 ---
         const bgm = document.getElementById('bgm');
         const startMusic = () => {
